@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>原生js下拉模糊查询</title>
+  </head>
+  <body>
+    <div class="content">
+      <h2>下拉模糊查询</h2>
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          <em>请选择</em>
+          <i class="caret"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <input class="seach_input" placeholder="请输入搜索内容">
+          </li>
+          <li data="芒果">芒果</li>
+          <li data="土豆">土豆</li>
+          <li data="苹果">苹果</li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      new dropdownQuery('.dropdown');
+      function dropdownQuery(dropdownNode) {
+        this.dropdownNode = dropdownNode;
+        var _this = this;
+        document.querySelector('.dropdown-menu').style.display = 'none';
+        document.querySelector(_this.dropdownNode + '> button').addEventListener('click',function(e) {
+          console.log(e)
+        })
+      }
+    </script>
+    <style>
+       html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            width: 700px;
+            height: 500px;
+            margin: 0 auto; /*水平居中*/
+            position: relative;
+            top: 50%; /*偏移*/
+            transform: translateY(-50%);
+            border-radius: 5px;
+        }
+        .dropdown {
+          width: 400px;
+        }
+        .dropdown-toggle {
+          width: 100%;
+          text-align: left;
+          height: 35px;
+          background: #fff;
+          border: 1px solid #ccc;
+          border-radius: 2px;
+          outline: none;
+          cursor: pointer;
+        }
+        .dropdown-toggle:active {
+          border: 2px solid #ccc;
+        }
+        .dropdown-menu {
+          display: none;
+          border: 1px solid rgba(0,0,0,.15);
+          box-shadow: 0 6px 12px rgba(0,0,0,.175);
+          background: #fff;
+          z-index: 1000;
+          left: 0;
+          padding: 5px 0;
+          margin: 5px 0 0;
+          text-align: left;
+          list-style-type: none;
+        }
+        .dropdown-menu li:first-child {
+          display: flex;
+          padding: 5px 10px;
+        }
+        .dropdown-menu li {
+          display: block;
+          padding: 3px 20px;
+          clear: both;
+          font-weight: 400;
+          line-height: 1.42857143;
+          color: #333;
+          white-space: nowrap;
+        }
+        .dropdown-menu li:hover {
+          background-color: #eee;
+        }
+        .seach_input {
+          width: 100%;
+          outline: none;
+          height: 25px;
+          border-radius: 15px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+          line-height: 1.42857143;
+          color: #555;
+          background-color: #fff;
+          background-image: none;
+        }
+    </style>
+  </body>
+</html>
