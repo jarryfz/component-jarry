@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>jq下拉多选</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/icon.css"/>
+		<script src="js/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="content">
+			<h2>jquery下拉多选</h2>
+			<div class="jarryfz-select">
+				<div class="jarryfz-input">
+					<input type="text" class="jarryfz-input-inner" autocomplete="off" readonly="readonly" placeholder="请选择" />
+				</div>
+				<div class="jarryfz-select-dropdown">
+					<div class="jarryfz-select-dropdown_wrap">
+						<ul class="jarryfz-select-dropdown_list">
+							<li class="jarryfz-select-dropdown_item">水果</li>
+							<li class="jarryfz-select-dropdown_item">蔬菜</li>
+							<li class="jarryfz-select-dropdown_item">家禽</li>
+							<li class="jarryfz-select-dropdown_item">蛋品</li>
+							<li class="jarryfz-select-dropdown_item">海鲜</li>
+							<li class="jarryfz-select-dropdown_item">水产</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="test test-1">
+		  <div class="scrollbar"></div>
+		</div>
+		<script type="text/javascript">
+			function dropdownSelect(mainNode) {
+				this.mainNode = mainNode;
+				this.inputNode = $(mainNode).find('.jarryfz-input');
+				this.selectWrap = $('.jarryfz-select-dropdown',mainNode).find('.jarryfz-select-dropdown_list');
+				var _this = this;
+				$('.jarryfz-input').click(function(e) {
+					console.log(e)
+				})
+			}
+			dropdownSelect.prototype = {
+				constructor: dropdownSelect,
+				stopFunc: function(e) {
+					e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+				},
+				
+			}
+		</script>
+		<style type="text/css">
+			.jarryfz-select {
+				width: 400px;
+			}
+			.jarryfz-input {
+				width: 100%;
+				box-sizing: content-box;
+			}
+			.jarryfz-input-inner {
+				width: 100%;
+				height: 40px;
+				outline: none;
+				box-sizing: border-box;
+				color: #606266;
+				display: inline-block;
+				border: #ccc 1px solid;
+				cursor: pointer;
+				padding: 0 15px;
+			}
+			.jarryfz-input-inner:focus {
+				border: #42B983 1px solid;
+				height: 100%;
+			}
+			.jarryfz-select-dropdown {
+				width: 100%;
+				margin-top: 10px;
+			}
+			.jarryfz-select-dropdown_wrap {
+				box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+				max-height: 150px;
+				height: 100%;
+				overflow-y: auto;
+			}
+			.jarryfz-select-dropdown_wrap::-webkit-scrollbar {
+				width: 4px;
+			}
+			.jarryfz-select-dropdown_wrap::-webkit-scrollbar-thumb{
+				border-radius: 1em;
+				background-color: rgba(50,50,50,.3);
+			}
+			.jarryfz-select-dropdown_wrap::-webkit-scrollbar-track{
+				border-radius: 1em;
+				background-color: rgba(50,50,50,.1);
+			}
+			.jarryfz-select-dropdown_list {
+				list-style-type: none;
+				display: none;
+				margin: 0;
+				padding: 0;
+			}
+			.jarryfz-select-dropdown_item {
+				padding: 5px 16px;
+				color: #666666;
+				cursor: pointer;
+			}
+			.jarryfz-select-dropdown_item:hover {
+				background-color: #f5f7fa;
+			}
+			.jarryfz_selected::after {
+				float: right;
+				color: #42B983;
+				font-family: "iconfont";
+				content: "\e83b";
+				font-size: 12px;
+				font-weight: 700;
+			}
+		</style>
+	</body>
+</html>
