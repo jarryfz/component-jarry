@@ -15,9 +15,9 @@
           <i class="caret"></i>
         </button>
         <ul class="dropdown-menu">
-          <li>
+          <div class="dropdown-menu-input">
             <input class="seach_input" placeholder="请输入搜索内容">
-          </li>
+          </div>
           <li data="芒果">芒果</li>
           <li data="土豆">土豆</li>
           <li data="苹果">苹果</li>
@@ -25,20 +25,68 @@
       </div>
     </div>
     <script>
-      new dropdownQuery('.dropdown');
       function dropdownQuery(dropdownNode) {
         this.dropdownNode = dropdownNode;
-        var _this = this;
-        document.querySelector('.dropdown-menu').style.display = 'none';
+        var _this = this,
+					dropdownMenu = document.querySelector('.dropdown-menu'),
+					selectMenuNode = dropdownMenu.querySelectorAll('li'),
+					dropdownNode = document.querySelector(_this.dropdownNode);
+        // document.querySelector('.dropdown-menu').style.display = 'none';
+				document.onclick = function(e) {
+					dropdownMenu.style.display = 'none';
+				};
         document.querySelector(_this.dropdownNode + '> button').addEventListener('click',function(e) {
-          console.log(e)
-        })
-      }
+					_this.stopFunc(e);
+					var isHidden = dropdownMenu.offsetParent;
+					isHidden === null ? dropdownMenu.style.display = 'block' : dropdownMenu.style.display = 'none';
+        },false);
+				document.querySelector(_this.dropdownNode + '> ul').addEventListener('click',function(e) {
+					_this.stopFunc(e);
+				},false);
+				//选择方法
+				for(var i = 0; i < selectMenuNode.length; i++) {
+					selectMenuNode[i].addEventListener('click',function(e) {
+						_this.select(e)
+					})
+				}
+				document.querySelector('.seach_input').oninput = function(e) {
+					_this.search(e)
+				}
+      };
+			dropdownQuery.prototype = {
+				constructor: dropdownQuery
+			};
+			//阻止事件冒泡
+			dropdownQuery.prototype.stopFunc = function(e) {
+				e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+			}
+			dropdownQuery.prototype.select = function(e) {
+				var dropdownInput = e.target.parentNode.previousElementSibling.firstElementChild,
+					selectValue = e.target.innerText;
+				dropdownInput.innerText = selectValue;
+				e.target.parentNode.style.display = 'none';
+			}
+			dropdownQuery.prototype.search = function(e) {
+				var value = e.target.value;
+				var queryLi = e.target.parentElement.parentElement.querySelectorAll('li');
+				if(value.length < 1) {
+					for(var i=0; i<queryLi.length;i++) {
+						queryLi[i].style.display = 'block';
+					}
+				}else {
+					for(var i=0; i<queryLi.length;i++) {
+						queryLi[i].style.display = 'none';
+					}
+					var data = document.querySelector('[data*='+ value +']');
+					if(data) {
+						data.style.display = 'block';
+					}
+				}
+			}
+			new dropdownQuery('.dropdown');
     </script>
     <style>
        html,body {
-            width: 100%;
-            height: 100%;
             margin: 0;
             padding: 0;
         }
@@ -46,9 +94,6 @@
             width: 700px;
             height: 500px;
             margin: 0 auto; /*水平居中*/
-            position: relative;
-            top: 50%; /*偏移*/
-            transform: translateY(-50%);
             border-radius: 5px;
         }
         .dropdown {
@@ -79,10 +124,10 @@
           text-align: left;
           list-style-type: none;
         }
-        .dropdown-menu li:first-child {
+        /* .dropdown-menu li:first-child {
           display: flex;
           padding: 5px 10px;
-        }
+        } */
         .dropdown-menu li {
           display: block;
           padding: 3px 20px;
@@ -95,8 +140,11 @@
         .dropdown-menu li:hover {
           background-color: #eee;
         }
+				.dropdown-menu-input {
+					padding: 5px 10px;
+				}
         .seach_input {
-          width: 100%;
+					width: 100%;
           outline: none;
           height: 25px;
           border-radius: 15px;
